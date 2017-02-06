@@ -11,7 +11,13 @@ __sets = {}
 
 from datasets.pascal_voc import pascal_voc
 from datasets.coco import coco
+from datasets.progress import progress
 import numpy as np
+
+for split in ['train', 'test']:
+    name = 'progress_{}'.format(split)
+    __sets[name] = (lambda split=split: progress(split))
+
 
 # Set up voc_<year>_<split> using selective search "fast" mode
 for year in ['2007', '2012']:
