@@ -139,7 +139,8 @@ def filter_roidb(roidb):
                            (overlaps >= cfg.TRAIN.BG_THRESH_LO))[0]
         # image is only valid if such boxes exist
         valid = len(fg_inds) > 0 or len(bg_inds) > 0
-        return valid
+        #return valid
+        return True
 
     num = len(roidb)
     filtered_roidb = [entry for entry in roidb if is_valid(entry)]

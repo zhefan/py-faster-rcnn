@@ -22,7 +22,7 @@ from fast_rcnn.config import cfg
 class progress(imdb):
     def __init__(self, image_set, devkit_path=None):
         imdb.__init__(self, 'progress')
-        self._year = 2007
+        self._year = '2007'
         self._image_set = image_set
         self._devkit_path = self._get_default_path() if devkit_path is None \
                             else devkit_path
@@ -87,7 +87,8 @@ class progress(imdb):
         """
         Return the default path where PASCAL VOC is expected to be installed.
         """
-        return os.path.join(cfg.DATA_DIR, 'VOCdevkit' + self._year)
+        #return os.path.join(cfg.DATA_DIR, 'VOCdevkit' + self._year)
+        return os.path.join(cfg.DATA_DIR)
 
     def gt_roidb(self):
         """
