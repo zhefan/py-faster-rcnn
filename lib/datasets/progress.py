@@ -43,7 +43,7 @@ class progress(imdb):
         # PASCAL specific config options
         self.config = {'cleanup'     : True,
                        'use_salt'    : True,
-                       'use_diff'    : False,
+                       'use_diff'    : True,
                        'matlab_eval' : False,
                        'rpn_file'    : None,
                        'min_size'    : 2}

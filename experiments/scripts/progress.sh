@@ -30,7 +30,7 @@ case $DATASET in
     TRAIN_IMDB="progress_train"
     TEST_IMDB="progress_test"
     PT_DIR="progress"
-    ITERS=1000
+    ITERS=10000
     ;;
   pascal_voc)
     TRAIN_IMDB="voc_2007_trainval"
@@ -69,9 +69,9 @@ set +x
 NET_FINAL=`grep -B 1 "done solving" ${LOG} | grep "Wrote snapshot" | awk '{print $4}'`
 set -x
 
-time ./tools/test_net.py --gpu ${GPU_ID} \
-  --def models/${PT_DIR}/${NET}/faster_rcnn_end2end/test.prototxt \
-  --net ${NET_FINAL} \
-  --imdb ${TEST_IMDB} \
-  --cfg experiments/cfgs/faster_rcnn_end2end.yml \
-  ${EXTRA_ARGS}
+#time ./tools/test_net.py --gpu ${GPU_ID} \
+#  --def models/${PT_DIR}/${NET}/faster_rcnn_end2end/test.prototxt \
+#  --net ${NET_FINAL} \
+#  --imdb ${TEST_IMDB} \
+#  --cfg experiments/cfgs/faster_rcnn_end2end.yml \
+#  ${EXTRA_ARGS}
