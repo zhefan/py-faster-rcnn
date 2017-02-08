@@ -50,8 +50,8 @@ __C.TRAIN.BATCH_SIZE = 128
 __C.TRAIN.FG_FRACTION = 0.25
 
 # Overlap threshold for a ROI to be considered foreground (if >= FG_THRESH)
-#__C.TRAIN.FG_THRESH = 0.5
-__C.TRAIN.FG_THRESH = 1.0 
+__C.TRAIN.FG_THRESH = 0.5
+#__C.TRAIN.FG_THRESH = 1.0 
 
 # Overlap threshold for a ROI to be considered background (class = 0 if
 # overlap in [LO, HI))
@@ -62,7 +62,8 @@ __C.TRAIN.BG_THRESH_LO = 0.1
 __C.TRAIN.USE_FLIPPED = True
 
 # Train bounding-box regressors
-__C.TRAIN.BBOX_REG = True
+#__C.TRAIN.BBOX_REG = True
+__C.TRAIN.BBOX_REG = False
 
 # Overlap required between a ROI and ground-truth box in order for that ROI to
 # be used as a bounding-box regression training example
@@ -90,7 +91,8 @@ __C.TRAIN.BBOX_NORMALIZE_MEANS = (0.0, 0.0, 0.0, 0.0)
 __C.TRAIN.BBOX_NORMALIZE_STDS = (0.1, 0.1, 0.2, 0.2)
 
 # Train using these proposals
-__C.TRAIN.PROPOSAL_METHOD = 'selective_search'
+#__C.TRAIN.PROPOSAL_METHOD = 'selective_search'
+__C.TRAIN.PROPOSAL_METHOD = 'gt'
 
 # Make minibatches from images that have similar aspect ratios (i.e. both
 # tall and thin or both short and wide) in order to avoid wasting computation
