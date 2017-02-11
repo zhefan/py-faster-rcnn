@@ -30,7 +30,7 @@ case $DATASET in
     TRAIN_IMDB="progress_train"
     TEST_IMDB="progress_test"
     PT_DIR="progress"
-    ITERS=10000
+    ITERS=100000
     ;;
   pascal_voc)
     TRAIN_IMDB="voc_2007_trainval"

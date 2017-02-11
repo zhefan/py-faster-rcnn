@@ -24,8 +24,8 @@ import scipy.io as sio
 import caffe, os, sys, cv2
 import argparse
 
-# pascal voc
 '''
+# pascal voc
 CLASSES = ('__background__',
            'aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
@@ -36,12 +36,21 @@ NETS = {'vgg16': ('VGG16',
                   'vgg16_faster_rcnn_iter_30000.caffemodel'),
         'zf': ('ZF',
                   'ZF_faster_rcnn_final.caffemodel')}
-'''
 # coco
 CLASSES = ('__background__','person','bicycle','car','motorcycle','airplane','bus','train','truck','boat','traffic light','fire hydrant','stop sign','parking meter','bench','bird','cat','dog','horse','sheep','cow','elephant','bear','zebra','giraffe','backpack','umbrella','handbag','tie','suitcase','frisbee','skis','snowboard','sports ball','kite','baseball bat','baseball glove','skateboard','surfboard','tennis racket','bottle','wine glass','cup','fork','knife','spoon','bowl','banana','apple','sandwich','orange','broccoli','carrot','hot dog','pizza','donut','cake','chair','couch','potted plant','bed','dining table','toilet','tv','laptop','mouse','remote','keyboard','cell phone','microwave','oven','toaster','sink','refrigerator','book','clock','vase','scissors','teddy bear','hair drier','toothbrush')
 
 NETS = {'vgg16': ('VGG16',
-                  'coco_vgg16_faster_rcnn_final.caffemodel')}
+                  'coco_VGG16_faster_rcnn_final.caffemodel')}
+'''
+
+CLASSES = ('__background__', # always index 0
+                         'tide', 'spray_bottle_a', 'waterpot', 'sugar',
+                         'red_bowl', 'clorox', 'shampoo', 'downy', 'salt',
+                         'toy', 'detergent', 'scotch_brite', 'cola',
+                         'blue_cup', 'ranch')
+NETS = {'vgg16': ('VGG16',
+                  'progress.caffemodel')}
+
 
 def vis_detections(im, class_name, dets, thresh=0.5):
     """Draw detected bounding boxes."""
@@ -74,6 +83,7 @@ def vis_detections(im, class_name, dets, thresh=0.5):
     plt.axis('off')
     plt.tight_layout()
     plt.draw()
+    fig.savefig('./output/img/'+class_name+'_demo.png')
 
 def demo(net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
@@ -91,7 +101,7 @@ def demo(net, image_name):
            '{:d} object proposals').format(timer.total_time, boxes.shape[0])
 
     # Visualize detections for each class
-    CONF_THRESH = 0.3
+    CONF_THRESH = 0.01
     NMS_THRESH = 0.05
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
@@ -150,10 +160,12 @@ if __name__ == '__main__':
     #im_names = ['000456.jpg', '000542.jpg', '001150.jpg',
     #            '001763.jpg', '004545.jpg']
     #im_names = ['frame0000.jpg']
-    im_names = ['lab.jpg']
+    im_names = ['scenergb.jpg']
     for im_name in im_names:
         print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Demo for data/demo/{}'.format(im_name)
         demo(net, im_name)
 
-    plt.show()
+    #plt.show()
+    print('prototxt: '+prototxt)
+    print('caffemodel: '+caffemodel)
