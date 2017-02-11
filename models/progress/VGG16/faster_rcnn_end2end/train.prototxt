@@ -323,10 +323,10 @@ layer {
   bottom: "conv5_1"
   top: "conv5_2"
   param {
-    lr_mult: 1
+    lr_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -346,10 +346,10 @@ layer {
   bottom: "conv5_2"
   top: "conv5_3"
   param {
-    lr_mult: 1
+    lr_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
   }
   convolution_param {
     num_output: 512
