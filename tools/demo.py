@@ -42,7 +42,6 @@ CLASSES = ('__background__','person','bicycle','car','motorcycle','airplane','bu
 NETS = {'vgg16': ('VGG16',
                   'coco_VGG16_faster_rcnn_final.caffemodel')}
 '''
-
 CLASSES = ('__background__', # always index 0
                          'tide', 'spray_bottle_a', 'waterpot', 'sugar',
                          'red_bowl', 'clorox', 'shampoo', 'downy', 'salt',
@@ -101,7 +100,7 @@ def demo(net, image_name):
            '{:d} object proposals').format(timer.total_time, boxes.shape[0])
 
     # Visualize detections for each class
-    CONF_THRESH = 0.01
+    CONF_THRESH = 0.333
     NMS_THRESH = 0.05
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
@@ -159,8 +158,8 @@ if __name__ == '__main__':
 
     #im_names = ['000456.jpg', '000542.jpg', '001150.jpg',
     #            '001763.jpg', '004545.jpg']
-    #im_names = ['frame0000.jpg']
-    im_names = ['scenergb.jpg']
+    im_names = ['train.jpg']
+    #im_names = ['scenergb.jpg']
     for im_name in im_names:
         print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Demo for data/demo/{}'.format(im_name)
