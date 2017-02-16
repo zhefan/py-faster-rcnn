@@ -42,11 +42,15 @@ CLASSES = ('__background__','person','bicycle','car','motorcycle','airplane','bu
 NETS = {'vgg16': ('VGG16',
                   'coco_VGG16_faster_rcnn_final.caffemodel')}
 '''
+'''
 CLASSES = ('__background__', # always index 0
                          'tide', 'spray_bottle_a', 'waterpot', 'sugar',
                          'red_bowl', 'clorox', 'shampoo', 'downy', 'salt',
                          'toy', 'detergent', 'scotch_brite', 'cola',
                          'blue_cup', 'ranch')
+'''
+CLASSES = ('__background__', # always index 0
+                        'clorox','sugar')
 NETS = {'vgg16': ('VGG16',
                   'progress.caffemodel')}
 
@@ -84,7 +88,7 @@ def vis_detections(im, class_name, dets, thresh=0.5):
     plt.draw()
     fig.savefig('./output/img/'+class_name+'_demo.png')
 
-def demo(net, image_name):
+def demo(net, image_name, CONF_THRESH):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
@@ -100,7 +104,6 @@ def demo(net, image_name):
            '{:d} object proposals').format(timer.total_time, boxes.shape[0])
 
     # Visualize detections for each class
-    CONF_THRESH = 0.333
     NMS_THRESH = 0.05
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
@@ -122,6 +125,10 @@ def parse_args():
                         action='store_true')
     parser.add_argument('--net', dest='demo_net', help='Network to use [vgg16]',
                         choices=NETS.keys(), default='vgg16')
+    parser.add_argument('--input', dest='im_name', help='input image',
+                        default='scenergb.jpg')
+    parser.add_argument('--conf', dest='conf', help='conf_thresh',
+                        default=0.5, type=float)
 
     args = parser.parse_args()
 
@@ -158,12 +165,10 @@ if __name__ == '__main__':
 
     #im_names = ['000456.jpg', '000542.jpg', '001150.jpg',
     #            '001763.jpg', '004545.jpg']
-    im_names = ['train.jpg']
     #im_names = ['scenergb.jpg']
-    for im_name in im_names:
-        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-        print 'Demo for data/demo/{}'.format(im_name)
-        demo(net, im_name)
+    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+    print 'Demo for data/demo/{}'.format(args.im_name)
+    demo(net, args.im_name, args.conf)
 
     #plt.show()
     print('prototxt: '+prototxt)
