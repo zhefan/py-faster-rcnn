@@ -414,10 +414,10 @@ layer {
   }
 }
 layer {
-  name: "cls_score"
+  name: "cls_score_progress"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "cls_score"
+  top: "cls_score_progress"
   param {
     lr_mult: 1
   }
@@ -437,10 +437,10 @@ layer {
   }
 }
 layer {
-  name: "bbox_pred"
+  name: "bbox_pred_progress"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "bbox_pred"
+  top: "bbox_pred_progress"
   param {
     lr_mult: 0
   }
@@ -462,7 +462,7 @@ layer {
 layer {
   name: "loss_cls"
   type: "SoftmaxWithLoss"
-  bottom: "cls_score"
+  bottom: "cls_score_progress"
   bottom: "labels"
   top: "loss_cls"
   loss_weight: 1
@@ -470,7 +470,7 @@ layer {
 layer {
   name: "loss_bbox"
   type: "SmoothL1Loss"
-  bottom: "bbox_pred"
+  bottom: "bbox_pred_progress"
   bottom: "bbox_targets"
   bottom: "bbox_inside_weights"
   bottom: "bbox_outside_weights"
@@ -503,14 +503,14 @@ layer {
 }
 
 layer {
-  name: "rpn_cls_score"
+  name: "rpn_cls_score_progress"
   type: "Convolution"
   bottom: "rpn/output"
-  top: "rpn_cls_score"
+  top: "rpn_cls_score_progress"
   param { lr_mult: 0 decay_mult: 0 }
   param { lr_mult: 0 decay_mult: 0 }
   convolution_param {
-    num_output: 18   # 2(bg/fg) * 9(anchors)
+    num_output: 24   # 2(bg/fg) * 9(anchors)
     kernel_size: 1 pad: 0 stride: 1
     weight_filler { type: "gaussian" std: 0.01 }
     bias_filler { type: "constant" value: 0 }
@@ -524,7 +524,7 @@ layer {
   param { lr_mult: 0 decay_mult: 0 }
   param { lr_mult: 0 decay_mult: 0 }
   convolution_param {
-    num_output: 36   # 4 * 9(anchors)
+    num_output: 48   # 4 * 9(anchors)
     kernel_size: 1 pad: 0 stride: 1
     weight_filler { type: "gaussian" std: 0.01 }
     bias_filler { type: "constant" value: 0 }
@@ -533,7 +533,7 @@ layer {
 layer {
   name: "silence_rpn_cls_score"
   type: "Silence"
-  bottom: "rpn_cls_score"
+  bottom: "rpn_cls_score_progress"
 }
 layer {
   name: "silence_rpn_bbox_pred"

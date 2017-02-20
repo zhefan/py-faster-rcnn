@@ -14,6 +14,7 @@ from datasets.coco import coco
 from datasets.progress import progress
 import numpy as np
 
+# Set up progress
 for split in ['train', 'test']:
     name = 'progress_{}'.format(split)
     __sets[name] = (lambda split=split: progress(split))

@@ -51,7 +51,6 @@ __C.TRAIN.FG_FRACTION = 0.25
 
 # Overlap threshold for a ROI to be considered foreground (if >= FG_THRESH)
 __C.TRAIN.FG_THRESH = 0.5
-#__C.TRAIN.FG_THRESH = 1.0 
 
 # Overlap threshold for a ROI to be considered background (class = 0 if
 # overlap in [LO, HI))
@@ -62,8 +61,7 @@ __C.TRAIN.BG_THRESH_LO = 0.1
 __C.TRAIN.USE_FLIPPED = True
 
 # Train bounding-box regressors
-#__C.TRAIN.BBOX_REG = True
-__C.TRAIN.BBOX_REG = False
+__C.TRAIN.BBOX_REG = True
 
 # Overlap required between a ROI and ground-truth box in order for that ROI to
 # be used as a bounding-box regression training example
@@ -91,7 +89,6 @@ __C.TRAIN.BBOX_NORMALIZE_MEANS = (0.0, 0.0, 0.0, 0.0)
 __C.TRAIN.BBOX_NORMALIZE_STDS = (0.1, 0.1, 0.2, 0.2)
 
 # Train using these proposals
-#__C.TRAIN.PROPOSAL_METHOD = 'selective_search'
 __C.TRAIN.PROPOSAL_METHOD = 'gt'
 
 # Make minibatches from images that have similar aspect ratios (i.e. both
@@ -182,7 +179,6 @@ __C.DEDUP_BOXES = 1./16.
 # We use the same pixel mean for all networks even though it's not exactly what
 # they were trained with
 __C.PIXEL_MEANS = np.array([[[102.9801, 115.9465, 122.7717]]])
-#__C.PIXEL_MEANS = np.array([[[99.5109, 104.4950, 119.9784]]])
 
 # For reproducibility
 __C.RNG_SEED = 3
@@ -197,6 +193,7 @@ __C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..', '..'))
 __C.DATA_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'data'))
 
 # Model directory
+#__C.MODELS_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'models', 'pascal_voc'))
 __C.MODELS_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'models', 'progress'))
 
 # Name (or path to) the matlab executable

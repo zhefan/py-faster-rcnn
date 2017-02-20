@@ -77,8 +77,8 @@ def get_solvers(net_name):
                [net_name, n, 'stage2_fast_rcnn_solver30k40k.pt']]
     solvers = [os.path.join(cfg.MODELS_DIR, *s) for s in solvers]
     # Iterations for each training stage
-    max_iters = [80000, 40000, 80000, 40000]
-    # max_iters = [100, 100, 100, 100]
+    #max_iters = [80000, 40000, 80000, 40000]
+    max_iters = [100, 10000, 100, 100]
     # Test prototxt for the RPN
     rpn_test_prototxt = os.path.join(
         cfg.MODELS_DIR, net_name, n, 'rpn_test.pt')
@@ -131,6 +131,7 @@ def train_rpn(queue=None, imdb_name=None, init_model=None, solver=None,
     for i in model_paths[:-1]:
         os.remove(i)
     rpn_model_path = model_paths[-1]
+    rpn_net_name = os.path.splitext(os.path.basename(rpn_model_path))[0]
     # Send final model path through the multiprocessing queue
     queue.put({'model_path': rpn_model_path})
 
@@ -259,7 +260,7 @@ if __name__ == '__main__':
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
     print 'Stage 1 Fast R-CNN using RPN proposals, init from ImageNet model'
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-
+    proposal_dir = '/home/zhefanye/Documents/Programs/code/py-faster-rcnn/output/faster_rcnn_alt_opt/progress/vgg16_rpn_stage1_iter_100_proposals.pkl'
     cfg.TRAIN.SNAPSHOT_INFIX = 'stage1'
     mp_kwargs = dict(
             queue=mp_queue,
@@ -268,7 +269,8 @@ if __name__ == '__main__':
             solver=solvers[1],
             max_iters=max_iters[1],
             cfg=cfg,
-            rpn_file=rpn_stage1_out['proposal_path'])
+            #rpn_file=rpn_stage1_out['proposal_path'])
+            rpn_file=proposal_dir)
     p = mp.Process(target=train_fast_rcnn, kwargs=mp_kwargs)
     p.start()
     fast_rcnn_stage1_out = mp_queue.get()
