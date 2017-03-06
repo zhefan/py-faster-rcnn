@@ -42,15 +42,11 @@ CLASSES = ('__background__','person','bicycle','car','motorcycle','airplane','bu
 NETS = {'vgg16': ('VGG16',
                   'coco_VGG16_faster_rcnn_final.caffemodel')}
 '''
-'''
 CLASSES = ('__background__', # always index 0
                          'tide', 'spray_bottle_a', 'waterpot', 'sugar',
                          'red_bowl', 'clorox', 'shampoo', 'downy', 'salt',
                          'toy', 'detergent', 'scotch_brite', 'cola',
                          'blue_cup', 'ranch')
-'''
-CLASSES = ('__background__', # always index 0
-                        'clorox','sugar')
 NETS = {'vgg16': ('VGG16',
                   'progress.caffemodel')}
 
