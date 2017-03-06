@@ -142,10 +142,12 @@ layer {
   bottom: "pool2"
   top: "conv3_1"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -165,10 +167,12 @@ layer {
   bottom: "conv3_1"
   top: "conv3_2"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -188,10 +192,12 @@ layer {
   bottom: "conv3_2"
   top: "conv3_3"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -222,10 +228,12 @@ layer {
   bottom: "pool3"
   top: "conv4_1"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -245,10 +253,12 @@ layer {
   bottom: "conv4_1"
   top: "conv4_2"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -268,10 +278,12 @@ layer {
   bottom: "conv4_2"
   top: "conv4_3"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -302,10 +314,12 @@ layer {
   bottom: "pool4"
   top: "conv5_1"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -325,10 +339,12 @@ layer {
   bottom: "conv5_1"
   top: "conv5_2"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -348,10 +364,12 @@ layer {
   bottom: "conv5_2"
   top: "conv5_3"
   param {
-    lr_mult: 0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -373,8 +391,8 @@ layer {
   type: "Convolution"
   bottom: "conv5_3"
   top: "rpn/output"
-  param { lr_mult: 0 }
-  param { lr_mult: 0 }
+  param { lr_mult: 1.0 decay_mult: 1.0 }
+  param { lr_mult: 2.0 decay_mult: 0 }
   convolution_param {
     num_output: 512
     kernel_size: 3 pad: 1 stride: 1
@@ -394,8 +412,8 @@ layer {
   type: "Convolution"
   bottom: "rpn/output"
   top: "rpn_cls_score"
-  param { lr_mult: 0}
-  param { lr_mult: 0}
+  param { lr_mult: 1.0 decay_mult: 1.0 }
+  param { lr_mult: 2.0 decay_mult: 0 }
   convolution_param {
     num_output: 24   # 2(bg/fg) * 12(anchors)
     kernel_size: 1 pad: 0 stride: 1
@@ -403,14 +421,13 @@ layer {
     bias_filler { type: "constant" value: 0 }
   }
 }
-
 layer {
   name: "rpn_bbox_pred"
   type: "Convolution"
   bottom: "rpn/output"
   top: "rpn_bbox_pred"
-  param { lr_mult: 0.0 }
-  param { lr_mult: 0.0 }
+  param { lr_mult: 1.0 decay_mult: 1.0 }
+  param { lr_mult: 2.0 decay_mult: 0 }
   convolution_param {
     num_output: 48   # 4 * 12(anchors)
     kernel_size: 1 pad: 0 stride: 1
@@ -418,7 +435,6 @@ layer {
     bias_filler { type: "constant" value: 0 }
   }
 }
-
 layer {
    bottom: "rpn_cls_score"
    top: "rpn_cls_score_reshape"
@@ -435,7 +451,6 @@ layer {
   bottom: "rpn_cls_score_reshape"
   top: "rpn_cls_prob"
 }
-
 layer {
   name: 'rpn_cls_prob_reshape'
   type: 'Reshape'
@@ -443,14 +458,13 @@ layer {
   top: 'rpn_cls_prob_reshape'
   reshape_param { shape { dim: 0 dim: 24 dim: -1 dim: 0 } }
 }
-
 layer {
   name: 'proposal'
   type: 'Python'
   bottom: 'rpn_cls_prob_reshape'
   bottom: 'rpn_bbox_pred'
   bottom: 'im_info'
-  top: 'rpn_rois'
+  top: 'rois'
   python_param {
     module: 'rpn.proposal_layer'
     layer: 'ProposalLayer'
@@ -479,9 +493,11 @@ layer {
   top: "fc6"
   param {
     lr_mult: 1
+    decay_mult: 1
   }
   param {
     lr_mult: 2
+    decay_mult: 0
   }
   inner_product_param {
     num_output: 4096
@@ -500,9 +516,11 @@ layer {
   top: "fc7"
   param {
     lr_mult: 1
+    decay_mult: 1
   }
   param {
     lr_mult: 2
+    decay_mult: 0
   }
   inner_product_param {
     num_output: 4096
@@ -515,18 +533,20 @@ layer {
   top: "fc7"
 }
 layer {
-  name: "cls_score_progress"
+  name: "cls_score"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "cls_score_progress"
+  top: "cls_score"
   param {
     lr_mult: 1
+    decay_mult: 1
   }
   param {
     lr_mult: 2
+    decay_mult: 0
   }
   inner_product_param {
-    num_output: 16
+    num_output: 3
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -538,18 +558,20 @@ layer {
   }
 }
 layer {
-  name: "bbox_pred_progress"
+  name: "bbox_pred"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "bbox_pred_progress"
+  top: "bbox_pred"
   param {
     lr_mult: 1
+    decay_mult: 1
   }
   param {
     lr_mult: 2
+    decay_mult: 0
   }
   inner_product_param {
-    num_output: 64
+    num_output: 12
     weight_filler {
       type: "gaussian"
       std: 0.001
