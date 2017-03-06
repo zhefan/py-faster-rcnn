@@ -269,8 +269,7 @@ if __name__ == '__main__':
             solver=solvers[1],
             max_iters=max_iters[1],
             cfg=cfg,
-            #rpn_file=rpn_stage1_out['proposal_path'])
-            rpn_file=proposal_dir)
+            rpn_file=rpn_stage1_out['proposal_path'])
     p = mp.Process(target=train_fast_rcnn, kwargs=mp_kwargs)
     p.start()
     fast_rcnn_stage1_out = mp_queue.get()
