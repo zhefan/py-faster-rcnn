@@ -16,10 +16,11 @@ GPU_ID=$1
 NET=$2
 NET_lc=${NET,,}
 DATASET=$3
+PRETRAIN=$4
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:3:$len}
+EXTRA_ARGS=${array[@]:4:$len}
 EXTRA_ARGS_SLUG=${EXTRA_ARGS// /_}
 
 case $DATASET in
@@ -44,7 +45,7 @@ echo Logging output to "$LOG"
 
 time ./tools/train_net.py --gpu ${GPU_ID} \
   --solver models/${PT_DIR}/${NET}/faster_rcnn_end2end/solver.prototxt \
-  --weights data/faster_rcnn_models/coco_${NET}_faster_rcnn_final.caffemodel \
+  --weights /media/zhefanye/Linux_Data/Data/py-faster-rcnn/output/faster_rcnn_end2end/progress/${PRETRAIN}.caffemodel \
   --imdb ${TRAIN_IMDB} \
   --iters ${ITERS} \
   --cfg experiments/cfgs/faster_rcnn_end2end.yml \
