@@ -45,7 +45,7 @@ echo Logging output to "$LOG"
 
 time ./tools/train_net.py --gpu ${GPU_ID} \
   --solver models/${PT_DIR}/${NET}/faster_rcnn_end2end/solver.prototxt \
-  --weights /media/zhefanye/Linux_Data/Data/py-faster-rcnn/output/faster_rcnn_end2end/progress/${PRETRAIN}.caffemodel \
+  --weights ${PRETRAIN}.caffemodel \
   --imdb ${TRAIN_IMDB} \
   --iters ${ITERS} \
   --cfg experiments/cfgs/faster_rcnn_end2end.yml \
