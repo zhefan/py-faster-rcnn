@@ -1,5 +1,5 @@
 train_net: "models/progress/VGG16/faster_rcnn_end2end/train.prototxt"
-base_lr: 0.001
+base_lr: 0.01
 lr_policy: "step"
 gamma: 0.0001 
 stepsize: 5000
