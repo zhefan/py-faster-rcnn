@@ -450,7 +450,7 @@ layer {
   bottom: 'rpn_cls_prob_reshape'
   bottom: 'rpn_bbox_pred'
   bottom: 'im_info'
-  top: 'rois'
+  top: 'rpn_rois'
   python_param {
     module: 'rpn.proposal_layer'
     layer: 'ProposalLayer'
@@ -515,10 +515,10 @@ layer {
   top: "fc7"
 }
 layer {
-  name: "cls_score"
+  name: "cls_score_progress"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "cls_score"
+  top: "cls_score_progress"
   param {
     lr_mult: 1
   }
@@ -538,10 +538,10 @@ layer {
   }
 }
 layer {
-  name: "bbox_pred"
+  name: "bbox_pred_progress"
   type: "InnerProduct"
   bottom: "fc7"
-  top: "bbox_pred"
+  top: "bbox_pred_progress"
   param {
     lr_mult: 1
   }
@@ -563,6 +563,6 @@ layer {
 layer {
   name: "cls_prob"
   type: "Softmax"
-  bottom: "cls_score"
+  bottom: "cls_score_progress"
   top: "cls_prob"
 }
